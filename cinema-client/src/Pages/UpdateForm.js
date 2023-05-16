@@ -90,7 +90,7 @@ function UpdateForm() {
                         <input className = "form-input form-number" name = "Score" value ={movie.Score} onChange = {setChange} 
                         placeholder = "Оцінка" type = "text">
                         </input>
-                        <span className = "number-desc">/10 &#9733;</span>
+                        <span className = "number-desc">/ 10 &#9733;</span>
                     </div>
 
                     <textarea className = "form-input form-area" name = "Plot"  value ={movie.Plot} onChange = {setChange} 

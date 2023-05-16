@@ -67,7 +67,7 @@ function AddForm() {
                     <div className = "form-number-field">
                         <input className = "form-input form-number" name = "Score" onChange = {setChange} placeholder = "Оцінка" type = "text">
                         </input>
-                        <span className = "number-desc">/10 &#9733;</span>
+                        <span className = "number-desc">/ 10 &#9733;</span>
                     </div>
                     <textarea className = "form-input form-area" name = "Plot"  onChange = {setChange} placeholder = "Сюжет"></textarea>
                 </div>  
