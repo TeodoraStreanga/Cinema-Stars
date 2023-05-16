@@ -97,22 +97,17 @@ app.put("/cinema-api/update/:id", upload.single('image'), (req, res) => {
         req.body.Plot,
         req.body.Score
     ]
-    let text = []
-
+    
     let sql = "UPDATE movies SET Name = ?, Year = ?, Genre = ?, Rating = ?, Length = ?, Plot = ?, Score = ?"
     
     if (req.file) {
         poster = 'http://localhost:4000/storage/' + req.file.filename;
     }
     if (poster !== null) {
-        text.push("Poster = ?");
-        values.push(poster);
+        sql += ", Poster = ?" 
+        values.push(poster)
     }
-
-    if (text.length > 0) {
-        sql += ", " + text.join(", ");
-    }
-
+    
     sql += " WHERE Movie_id = ?";
     values.push(movieId);
 
