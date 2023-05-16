@@ -1,0 +1,90 @@
+.nav-bar
+{
+    background-color:rgb(0, 0, 0);
+    display: flex;
+    justify-content:center;
+    flex-direction: row;
+    height: 70px;
+    gap: 115px;
+    color: white;
+}
+.nav-logo
+{
+    font-family:'Impact';
+    font-size: 50px;
+}
+.nav-field
+{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    gap: 20px;
+}
+.nav-link
+{
+    border: none;
+    color: white;
+    background: none;
+    font-size:20px;
+    height:20px;
+    text-decoration: none;
+    opacity: 0.7;
+}
+.nav-link:hover
+{
+    opacity:1;
+    cursor: pointer;
+}
+/* Search bar */
+.search-bar
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.search-field
+{
+    width:300px;
+    height:30px;
+    align-self: center;
+    background:none;
+    border:solid 3px;
+    border-color: white;
+    border-radius: 3px;
+    color: white;
+    padding-left: 5px;
+}
+.search-field::placeholder
+{
+    padding-left: 5px;
+    color:white;
+    opacity: 0.5;
+}
+.search-button
+{
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: url('../Assets/search-icon-white.png');
+    background-size: cover;
+    opacity: 0.5;
+}
+.search-button:hover
+{
+    cursor: pointer;
+    opacity: 1;
+}
+/* Title bar */
+.title-bar
+{
+    font-size:45px;
+    font-weight:bold;
+    border-bottom: solid 3px;
+    height:70px;
+    padding-left: 45px;
+    background-color:white;
+    padding-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
