@@ -83,55 +83,41 @@ app.post('/cinema-api/insert', upload.single('image'), (req,res)=> {
     })
 })
 //Update a movie
-app.put("/cinema-api/update/:id", upload.single('image'), (req,res) =>{
+app.put("/cinema-api/update/:id", upload.single('image'), (req, res) => {
     
-    const movieid = req.params.id
-    const Name = req.body.Name
-    const Year =  req.body.Year
-    const Genre = req.body.Genre
-    const Rating = req.body.Rating
-    const Length = req.body.Length
-    const Plot = req.body.Plot
-    const Score = req.body.Score
-    let  Poster = null 
-    
-    if (req.file) {Poster = 'http://localhost:4000/storage/' + req.file.filename;}
-    
-    let sql = "UPDATE movies SET "
+    movieId = req.params.id
+    const Poster = null
+
+    const values = [
+        req.body.Name,
+        req.body.Year,
+        req.body.Genre,
+        req.body.Rating,
+        req.body.Length,
+        req.body.Plot,
+        req.body.Score
+    ]
     let text = []
+
+    let sql = "UPDATE movies SET Name = ?, Year = ?, Genre = ?, Rating = ?, Length = ?, Plot = ?, Score = ?"
     
-    if (Name != null) {
-        text.push("Name = '" + Name + "'")
+    if (req.file) {
+        Poster = 'http://localhost:4000/storage/' + req.file.filename;
     }
-    if (Year != null) {
-        text.push("Year = '" + Year + "'")
+    if (Poster != null){
+        
+        text.push("Poster = ?");
+        values.push(Poster);
     }
-    if (Genre != null) {
-        text.push("Genre = '" + Genre + "'")
-    }
-    if (Rating != null) {
-        text.push("Rating = '" + Rating + "'")
-    }
-    if (Length != null) {
-        text.push("Length = '" + Length + "'")
-    }
-    if (Plot != null) {
-        text.push("Plot = '" + Plot + "'")
-    }
-    if (Score != null) {
-        text.push("Score = '" + Score + "'")
-    }
-    if (Poster != null) {
-        text.push("Poster = '" + Poster + "'")
-    }
-
-    sql += text.join(', ') + "WHERE Movie_id = " + movieid
-
-    db.query(sql, (err,data) =>{
-        if(err) throw err
-        res.json(data)
+    sql += text.join(", ") + " WHERE Movie_id = ?";
+    values.push(movieId);
+    
+    db.query(sql, values, (err, data) => {
+      if(err) throw err
+      res.json(data)
     })
-})
+
+  })
 //Delete a movie
 app.delete("/cinema-api/delete/:id", (req,res) =>{
     const id = req.params.id
@@ -176,22 +162,27 @@ app.get("/cinema-api/filter/:year&:genre&:rating", (req,res) =>{
         
         sql += ' WHERE '
         let text = []
+        let values =[]
     
         if (Year != "all") {
-            text.push('Year = ' + Year)
+            text.push('Year = ?')
+            values.push(Year)
         }
         if (Genre != "all") {
-            text.push('Genre LIKE "' + Genre + '"')
+            text.push('Genre LIKE ?')
+            values.push(Genre)
         }
         if (Rating != "all") {
-            text.push('Rating LIKE "' + Rating + '"')
+            text.push('Rating LIKE ?')
+            values.push(Rating)
         }
         sql += text.join(' AND ')
+
+        db.query(sql, values, (err,data) =>{
+            if(err) throw err
+            res.json(data)
+        })
     }
-    db.query(sql, (err,data) =>{
-        if(err) throw err
-        res.json(data)
-    })
 })
 //Listening on port 4000
 app.listen(4000, function(){

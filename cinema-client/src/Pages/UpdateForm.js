@@ -128,10 +128,9 @@ function UpdateForm() {
         e.preventDefault();
         try{
             const formdata = new FormData()
-            if (!file && !movie.Name && !movie.Year && !movie.Genre && !movie.Rating && !movie.Length && !movie.Plot && !movie.Score)
-            {return}
             
-            formdata.append('image', file)
+            if (file){ formdata.append('image', file)}
+           
             formdata.append('Name', movie.Name)
             formdata.append('Year', movie.Year)
             formdata.append('Genre', movie.Genre)
