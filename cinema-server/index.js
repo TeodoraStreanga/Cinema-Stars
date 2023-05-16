@@ -86,7 +86,7 @@ app.post('/cinema-api/insert', upload.single('image'), (req,res)=> {
 app.put("/cinema-api/update/:id", upload.single('image'), (req, res) => {
     
     movieId = req.params.id
-    const Poster = null
+    let poster = null
 
     const values = [
         req.body.Name,
@@ -102,22 +102,26 @@ app.put("/cinema-api/update/:id", upload.single('image'), (req, res) => {
     let sql = "UPDATE movies SET Name = ?, Year = ?, Genre = ?, Rating = ?, Length = ?, Plot = ?, Score = ?"
     
     if (req.file) {
-        Poster = 'http://localhost:4000/storage/' + req.file.filename;
+        poster = 'http://localhost:4000/storage/' + req.file.filename;
     }
-    if (Poster != null){
-        
+    if (poster !== null) {
         text.push("Poster = ?");
-        values.push(Poster);
+        values.push(poster);
     }
-    sql += text.join(", ") + " WHERE Movie_id = ?";
-    values.push(movieId);
-    
-    db.query(sql, values, (err, data) => {
-      if(err) throw err
-      res.json(data)
-    })
 
-  })
+    if (text.length > 0) {
+        sql += ", " + text.join(", ");
+    }
+
+    sql += " WHERE Movie_id = ?";
+    values.push(movieId);
+
+    db.query(sql, values, (err, data) => {
+        if (err) throw err;
+        res.json(data);
+    });
+})
+    
 //Delete a movie
 app.delete("/cinema-api/delete/:id", (req,res) =>{
     const id = req.params.id
@@ -152,34 +156,34 @@ app.get("/cinema-api/search/movie/:id", (req,res) =>{
 })
 //Filter by Year, Genre and Rating
 app.get("/cinema-api/filter/:year&:genre&:rating", (req,res) =>{
-    const Year = req.params.year
-    const Genre = req.params.genre
-    const Rating = req.params.rating
+    const year = req.params.year
+    const genre = req.params.genre
+    const rating = req.params.rating
 
     let sql = 'SELECT * FROM movies'
 
-    if (Year == "all" && Genre == "all" && Rating == "all")
+    if (year == "all" && genre == "all" && rating == "all")
     {
         db.query(sql, (err,data) =>{
             if(err) throw err
             res.json(data)
         })
     }
-    if (Year != "all" || Genre != "all" || Rating != "all") {
+    if (year != "all" || genre != "all" || rating != "all") {
         
         sql += ' WHERE '
         let text = []
         let values =[]
     
-        if (Year != "all") {
+        if (year != "all") {
             text.push('Year = ?')
             values.push(Year)
         }
-        if (Genre != "all") {
+        if (genre != "all") {
             text.push('Genre LIKE ?')
             values.push(Genre)
         }
-        if (Rating != "all") {
+        if (rating != "all") {
             text.push('Rating LIKE ?')
             values.push(Rating)
         }
