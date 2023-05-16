@@ -158,6 +158,13 @@ app.get("/cinema-api/filter/:year&:genre&:rating", (req,res) =>{
 
     let sql = 'SELECT * FROM movies'
 
+    if (Year == "all" && Genre == "all" && Rating == "all")
+    {
+        db.query(sql, (err,data) =>{
+            if(err) throw err
+            res.json(data)
+        })
+    }
     if (Year != "all" || Genre != "all" || Rating != "all") {
         
         sql += ' WHERE '
@@ -176,13 +183,13 @@ app.get("/cinema-api/filter/:year&:genre&:rating", (req,res) =>{
             text.push('Rating LIKE ?')
             values.push(Rating)
         }
-        sql += text.join(' AND ')
+        sql += text.join(' AND ')  
 
         db.query(sql, values, (err,data) =>{
             if(err) throw err
             res.json(data)
         })
-    }
+    }  
 })
 //Listening on port 4000
 app.listen(4000, function(){
