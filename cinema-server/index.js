@@ -121,7 +121,6 @@ app.put("/cinema-api/update/:id", upload.single('image'), (req, res) => {
         res.json(data);
     });
 })
-    
 //Delete a movie
 app.delete("/cinema-api/delete/:id", (req,res) =>{
     const id = req.params.id
