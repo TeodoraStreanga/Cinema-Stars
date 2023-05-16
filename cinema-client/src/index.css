@@ -12,8 +12,6 @@ body {
   background-attachment: fixed;
   display: flex;
   justify-content: center;
-  padding-top: 30px;
-  padding-bottom: 50px;
 }
 
 code {
