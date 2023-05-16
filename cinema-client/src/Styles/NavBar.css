@@ -52,8 +52,8 @@
     border:solid 3px;
     border-color: white;
     border-radius: 3px;
-    color: white;
     padding-left: 5px;
+    font-size: 17px;
 }
 .search-field::placeholder{padding-left: 5px;}
 .search-button
