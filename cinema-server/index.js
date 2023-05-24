@@ -129,10 +129,10 @@ app.delete("/cinema-api/delete/:id", (req,res) =>{
 })
 //Search by name
 app.get("/cinema-api/search/name/:name", (req,res) =>{
-    const name = req.params.name
-    sql = 'SELECT * FROM movies WHERE Name LIKE "%' + name + '%"'
+    const name = "%" + req.params.name + "%"
+    sql = 'SELECT * FROM movies WHERE Name LIKE ?'
     
-    db.query(sql, (err,data) =>{
+    db.query(sql, name, (err,data) =>{
         if(err) throw err
         res.json(data)
     })
