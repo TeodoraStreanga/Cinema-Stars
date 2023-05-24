@@ -171,15 +171,15 @@ app.get("/cinema-api/filter/:year&:genre&:rating", (req,res) =>{
     
         if (year != "all") {
             text.push('Year = ?')
-            values.push(Year)
+            values.push(year)
         }
         if (genre != "all") {
             text.push('Genre LIKE ?')
-            values.push(Genre)
+            values.push(genre)
         }
         if (rating != "all") {
             text.push('Rating LIKE ?')
-            values.push(Rating)
+            values.push(rating)
         }
         sql += text.join(' AND ')  
 
